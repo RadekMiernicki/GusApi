@@ -1,0 +1,20 @@
+Metadata-Version: 2.2
+Name: gus-api_client
+Version: 0.1
+Summary: GUS API client.
+Home-page: https://github.com/RadekMiernicki/GusApi
+Author: Radek Miernicki
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.12
+Requires-Dist: requests
+Requires-Dist: pydantic
+Requires-Dist: lxml
+Requires-Dist: zeep
+Dynamic: author
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
