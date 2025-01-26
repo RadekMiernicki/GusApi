@@ -1,1 +1,1 @@
-from gus_api_client.regon import RegonAPI 
+from gus_api.regon import RegonAPI 

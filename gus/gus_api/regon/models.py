@@ -1,9 +1,22 @@
 from typing import Optional, Any
 from datetime import datetime
+from abc import ABC, abstractmethod
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-class Report(BaseModel):
+class BaseReport(ABC):
+
+    @classmethod
+    def field_map(cls, api_result:dict[str,Any])->dict[str,Any]:
+        for old_key, new_key in cls.mapper():
+            api_result[new_key] = api_result.pop(old_key, None)
+        return cls(**api_result)
+
+    @abstractmethod
+    def mapper(cls)->list[tuple[str,str]]:
+        pass
+
+class Report(BaseModel, BaseReport):
     # BIR11DaneSzukajPodmioty
     nip:str
     regon:str
@@ -18,52 +31,78 @@ class Report(BaseModel):
     street_no:Optional[str] = None
     local_no:Optional[str] = None
     silos_id:int
-    typ:str
+    type:str
     status_nip:Optional[str] = None
     date_of_termination_of_business_activity:Optional[datetime] = None
 
-
-    @staticmethod
-    def field_map(api_result:dict[str,Any])->dict[str,Any]:
-        """
-        Method change names of data keys.
-        """
-        api_result['name'] = api_result.pop('nazwa',None)
-        api_result['postal_code'] = api_result.pop('kod_pocztowy',None)
-        api_result['city'] = api_result.pop('miejscowosc',None)
-        api_result['post'] = api_result.pop('miejscowosc_poczty',None)
-        api_result['region'] = api_result.pop('wojewodztwo',None)
-        api_result['district'] = api_result.pop('powiat',None)
-        api_result['commune'] = api_result.pop('gmina',None)
-        api_result['street'] = api_result.pop('ulica',None)
-        api_result['street_no'] = api_result.pop('nr_nieruchomosci',None)
-        api_result['local_no'] = api_result.pop('nr_lokalu',None)
-        api_result['date_of_termination_of_business_activity'] = api_result.pop('data_zakonczenia_dzialalnosci',None)
-        #TODO: set date of termination do datetime format
-
-        return api_result
-    
-
-    
-class ReportNaturlPersonGeneral(BaseModel):
-    # BIR11OsFizycznaDaneOgolne
-    
-    @staticmethod
-    def field_map(api_result:dict[str,Any])->dict[str,Any]:
+    @classmethod
+    def mapper(cls)->list[tuple[str,str]]:
         keys = [
-            ('regon9','fiz_regon9'),
-            ('nip','fiz_nip'),
-            ('status_nip', 'fiz_statusNip'),
+            ('Regon','regon'),
+            ('Nip','nip'),
+            ('statusNip','status_nip'),
+            ('Nazwa','name'),
+            ('Wojewodztwo','region'),
+            ('Powiat','district'),
+            ('Gmina','commune'),
+            ('Miejscowosc','city'),
+            ('KodPocztowy','postal_code'),
+            ('Ulica','street'),
+            ('NrNieruchomosci','street_no'),
+            ('NrLokalu','local_no'),
+            ('Typ','type'),
+            ('SilosID','silos_id'),
+            ('DataZakonczeniaDzialalnosci','date_of_termination_of_business_activity'),
+            ('MiejscowoscPoczty','post')
         ]
-        for new_key, old_key in keys:
-            api_result[new_key] = api_result.pop(old_key, None)
-        
-        return api_result
+        return keys
+
+    
+
+    
+class ReportNaturlPersonGeneral(BaseModel, BaseReport):
+    # BIR11OsFizycznaDaneOgolne
+    regon9:str =  Field(str, max_length=9, min_length=9)
+    nip:str = Field(str, max_digits=14, min_length=14)
+    status_nip:str
+    surname:str
+    first_name:str
+    last_name:str
+    middle_name:Optional[str] = None
 
 
-class ReportIndividualActivityCEIDG(BaseModel):
+    def mapper(cls)->list[tuple[str,str]]:
+        keys = [
+            ('fiz_regon9','regon9'),
+            ('fiz_nip','nip'),
+            ('fiz_statusNip','status_nip'),
+            ('fiz_nazwisko','surname'),
+            ('fiz_imie1', 'first_name'),
+            ('fiz_imie2','middle_name'),
+            ('fiz_dataWpisuPodmotuDoRegon', 'date_register'),
+            ('fiz_dataZaistnieniaZmiany','date_update'),
+            ('fiz_dataSklresleniaPodmiotuZRegon','date_remove'),
+            ('fiz_podstawowaFormaPrawna_Symbol'),
+            ('fiz_szczegolnaFormaPrawna_Symbol'),
+            ('fiz_formaFinansowania_Symbol'),
+            ('fiz_formaWlasnosci_Symbol'),
+            ('fiz_podstawowaFormaPrawna_Nazwa'),
+            ('fiz_szczegolnaFormaPrawna_Nazwa'),
+            ('fiz_formaFinansowania_Nazwa'),
+            ('fiz_formaWlasnosi_Nazwa'),
+            ('fiz_dzialalnoscCeidg'),
+            ('fiz_dzialalnoscRolnicza'),
+            ('fiz_dzialalnoscPozostala'),
+            ('fiz_dzialalnoscSkreslonaDo20141108'),
+            ('fiz_liczbaJednLokalnych')
+        ]
+        return keys
+
+
+class ReportIndividualActivityCeidg(BaseModel, BaseReport):
     # BIR11OsFizycznaDzialalnoscCeidg
     pass
+
 
 class ReportIndividualActivityOther(BaseModel):
     # BIR11OsFizycznaDzialalnoscPozostala]

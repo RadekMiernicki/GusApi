@@ -1,6 +1,8 @@
 setup.py
 gus_api/__init__.py
 gus_api/version.py
+gus_api/bdl/__init__.py
+gus_api/dbw/__init__.py
 gus_api/regon/__init__.py
 gus_api/regon/api.py
 gus_api/regon/client.py
@@ -8,6 +10,8 @@ gus_api/regon/const.py
 gus_api/regon/exceptions.py
 gus_api/regon/models.py
 gus_api/regon/version.py
+gus_api/sdp/__init__.py
+gus_api/teryt/__init__.py
 gus_api/tests/__init__.py
 gus_api/tests/test_regon_api.py
 gus_api/tests/utils.py

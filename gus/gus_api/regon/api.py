@@ -13,16 +13,14 @@ class RegonAPI:
     def __init__(self, api_key:Optional[str] = None):
         self._client = Client(api_key=api_key)
 
-    def _format(self, result:ObjectifiedElement, remove_prefix:bool = False, mapper:Callable[[dict],dict] = None)->dict[str,Any]:
+    def _format(self, result:ObjectifiedElement, remove_prefix:bool = False)->dict[str,Any]:
         formatted_result = {}
         for field in result.getchildren():
             name = field.tag
             if remove_prefix:
                 name = self._remove_prefix(name)
-            name = self._underscore(name)
+            # name = self._underscore(name)
             formatted_result[name] = field.text
-        if mapper:
-            formatted_result = mapper(formatted_result)
         return formatted_result
 
     @staticmethod
@@ -43,11 +41,9 @@ class RegonAPI:
     def find_by(
             self, nip:Optional[str] = None, regon:Optional[str] = None, krs:Optional[str] = None
         )-> list[dict[str,Any]]:
-        mapper = Report.field_map
         result = self._client.search(nip=nip, regon=regon, krs=krs)
-        result = [self._format(r, mapper=mapper) for r in objectify.fromstring(result).dane]
-
-        return [Report(**r) for r in result]
+        result = [self._format(r) for r in objectify.fromstring(result).dane]
+        return Report.field_map(result[0])
     
     def get_full_report(self, company_data:Report)->list[dict[str,Any]]:
         try:

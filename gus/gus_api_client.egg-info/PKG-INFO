@@ -1,6 +1,6 @@
 Metadata-Version: 2.2
-Name: gus-api_client
-Version: 0.1
+Name: gus-api-client
+Version: 0.2.1
 Summary: GUS API client.
 Home-page: https://github.com/RadekMiernicki/GusApi
 Author: Radek Miernicki
