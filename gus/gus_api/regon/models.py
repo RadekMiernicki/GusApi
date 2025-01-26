@@ -43,9 +43,23 @@ class Report(BaseModel):
 
         return api_result
     
+
+    
 class ReportNaturlPersonGeneral(BaseModel):
     # BIR11OsFizycznaDaneOgolne
-    pass
+    
+    @staticmethod
+    def field_map(api_result:dict[str,Any])->dict[str,Any]:
+        keys = [
+            ('regon9','fiz_regon9'),
+            ('nip','fiz_nip'),
+            ('status_nip', 'fiz_statusNip'),
+        ]
+        for new_key, old_key in keys:
+            api_result[new_key] = api_result.pop(old_key, None)
+        
+        return api_result
+
 
 class ReportIndividualActivityCEIDG(BaseModel):
     # BIR11OsFizycznaDzialalnoscCeidg
