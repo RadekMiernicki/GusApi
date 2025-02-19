@@ -1,0 +1,10 @@
+version: '1.0'
+
+sandbox:
+    ENDPOINT: https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc
+    WSDL: https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/wsdl/UslugaBIRzewnPubl.xsd
+    API_KEY: abcde12345abcde12345
+
+production_env:
+    ENDPOINT: urtl_to_prod_ver
+

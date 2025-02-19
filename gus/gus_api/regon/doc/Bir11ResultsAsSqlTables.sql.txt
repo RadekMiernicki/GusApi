@@ -1,7 +1,4 @@
 
--- definicje tabel wynikowych dla us³ugi BIR1.1
-
--- 1) Metoda BIR11DaneSzukajPodmioty
 
 	DECLARE [BIR11DaneSzukajPodmioty] table(
     Regon varchar(14) NOT NULL,
@@ -20,12 +17,7 @@
 	SilosID int,
 	DataZakonczeniaDzialalnosci varchar(10),
 	MiejscowoscPoczty varchar(200)
-	)
-
--- 2) Raporty metody DanePobierzPelnyRaport 
-	
-/* [BIR11OsFizycznaDaneOgolne] */
-
+	);
 	DECLARE [BIR11OsFizycznaDaneOgolne] TABLE ( 
 	[fiz_regon9] [char](9) NULL,
 	[fiz_nip] [varchar](10) NULL,
@@ -48,11 +40,8 @@
 	[fiz_dzialalnoscRolnicza] [int] NULL,
 	[fiz_dzialalnoscPozostala] [int] NULL,
 	[fiz_dzialalnoscSkreslonaDo20141108] [int] NULL,
-	[fiz_liczbaJednLokalnych] [int] NULL )
-	
-	
-/*  [BIR11OsFizycznaDzialalnoscCeidg] */
-
+	[fiz_liczbaJednLokalnych] [int] NULL 
+	);
 	DECLARE [BIR11OsFizycznaDzialalnoscCeidg] TABLE (
 	[fiz_regon9] [char](9) NULL,
 	[fiz_nazwa] [nvarchar](2000) NULL,
@@ -97,9 +86,9 @@
 	[fizC_OrganRejestrowy_Nazwa] [varchar](240) NULL,
 	[fizC_RodzajRejestru_Symbol] [varchar](3) NULL,
 	[fizC_RodzajRejestru_Nazwa] [varchar](240) NULL,
-	[fizC_NiePodjetoDzialalnosci] [bit] NULL	)
-	
-	/* [BIR11OsFizycznaDzialalnoscPozostala] */
+	[fizC_NiePodjetoDzialalnosci] [bit] NULL	
+	);
+
 	
 	DECLARE [BIR11OsFizycznaDzialalnoscPozostala] TABLE ( 
 	[fiz_regon9] [char](9) NULL,
@@ -143,10 +132,8 @@
 	[fizP_OrganRejestrowy_Symbol] [varchar](9) NULL,
 	[fizP_OrganRejestrowy_Nazwa] [varchar](240) NULL,
 	[fizP_RodzajRejestru_Symbol] [varchar](3) NULL,
-	[fizP_RodzajRejestru_Nazwa] [varchar](240) NULL)
-	
-	/* [BIR11OsFizycznaDzialalnoscRolnicza]  */
-	
+	[fizP_RodzajRejestru_Nazwa] [varchar](240) NULL
+	);
 	DECLARE [BIR11OsFizycznaDzialalnoscRolnicza] TABLE ( 
 	[fiz_regon9] [char](9) NULL,
 	[fiz_nazwa] [nvarchar](2000) NULL,
@@ -183,10 +170,8 @@
 	[fiz_adSiedzGmina_Nazwa] [varchar](100) NULL,
 	[fiz_adSiedzMiejscowosc_Nazwa] [varchar](100) NULL,
 	[fiz_adSiedzMiejscowoscPoczty_Nazwa] [varchar](100) NULL,
-	[fiz_adSiedzUlica_Nazwa] [varchar](351) NULL ) 
-
-/*  [BIR11OsFizycznaDzialalnoscSkreslonaDo20141108] */	
-
+	[fiz_adSiedzUlica_Nazwa] [varchar](351) NULL 
+	); 
 	DECLARE [BIR11OsFizycznaDzialalnoscSkreslonaDo20141108] TABLE ( 
 	[fiz_regon9] [char](9) NULL,
 	[fiz_nazwa] [nvarchar](2000) NULL,
@@ -222,11 +207,8 @@
 	[fiz_adSiedzGmina_Nazwa] [varchar](100) NULL,
 	[fiz_adSiedzMiejscowosc_Nazwa] [varchar](100) NULL,
 	[fiz_adSiedzMiejscowoscPoczty_Nazwa] [varchar](100) NULL,
-	[fiz_adSiedzUlica_Nazwa] [varchar](351) NULL )
-	
-	
-	/* [BIR11OsFizycznaListaJednLokalnych] */
-	
+	[fiz_adSiedzUlica_Nazwa] [varchar](351) NULL 
+	);
 	DECLARE [BIR11OsFizycznaListaJednLokalnych] TABLE (
 	[lokfiz_regon14] [char](14) NULL,
 	[lokfiz_nazwa] [varchar](2000) NULL,
@@ -255,20 +237,16 @@
 	[lokfiz_dataZawieszeniaDzialalnosci] [varchar](10) NULL,
 	[lokfiz_dataWznowieniaDzialalnosci] [varchar](10) NULL,
 	[lokfiz_dataZakonczeniaDzialalnosci] [varchar](10) NULL,
-	[lokfiz_dataSkresleniaZRegon] [varchar](10) NULL )
-	
-	/* [BIR11OsFizycznaPkd] */
-	
+	[lokfiz_dataSkresleniaZRegon] [varchar](10) NULL 
+	);
 	DECLARE [BIR11OsFizycznaPkd] TABLE ( 
 	[fiz_pkd_Kod] [varchar](5) NULL,
 	[fiz_pkd_Nazwa] [varchar](200) NULL,
 	[fiz_pkd_Przewazajace] [varchar](1) NULL,
 	[fiz_SilosID] [int] NULL,
 	[fiz_Silos_Symbol] [varchar](10) NULL,
-	[fiz_dataSkresleniaDzialalnosciZRegon] [varchar](10) NULL )
-	
-	/* [BIR11OsPrawna] */
-	
+	[fiz_dataSkresleniaDzialalnosciZRegon] [varchar](10) NULL 
+	);
 	DECLARE [BIR11OsPrawna] TABLE ( 
 	[praw_regon9] [char](9) NULL,
 	[praw_nip] [varchar](10) NULL,
@@ -324,10 +302,8 @@
 	[praw_organZalozycielski_Nazwa] [varchar](200) NULL,
 	[praw_organRejestrowy_Nazwa] [varchar](240) NULL,
 	[praw_rodzajRejestruEwidencji_Nazwa] [varchar](240) NULL,
-	[praw_liczbaJednLokalnych] [int] NULL) 
-	
-	/*  [BIR11OsPrawnaListaJednLokalnych] */
-	
+	[praw_liczbaJednLokalnych] [int] NULL
+	); 
 	DECLARE [BIR11OsPrawnaListaJednLokalnych] TABLE ( 
 	[lokpraw_regon14] [char](14) NULL,
 	[lokpraw_nazwa] [varchar](254) NULL,
@@ -354,26 +330,20 @@
 	[lokpraw_dataZawieszeniaDzialalnosci] [varchar](10) NULL,
 	[lokpraw_dataWznowieniaDzialalnosci] [varchar](10) NULL,
 	[lokpraw_dataZakonczeniaDzialalnosci] [varchar](10) NULL,
-	[lokpraw_dataSkresleniaZRegon] [varchar](10) NULL )
-	
-	/* [BIR11OsPrawnaPkd] */
-	
-		DECLARE [BIR11OsPrawnaPkd] TABLE ( 
+	[lokpraw_dataSkresleniaZRegon] [varchar](10) NULL 
+	);
+	DECLARE [BIR11OsPrawnaPkd] TABLE ( 
 		[praw_pkdKod] [varchar](5) NULL,
 		[praw_pkdNazwa] [varchar](200) NULL,
-		[praw_pkdPrzewazajace] [varchar](1) NULL ) 
-		
-		/* [BIR11OsPrawnaSpCywilnaWspolnicy] */
-		
-			DECLARE [BIR11OsPrawnaSpCywilnaWspolnicy] TABLE ( 
+		[praw_pkdPrzewazajace] [varchar](1) NULL 
+		); 
+	DECLARE [BIR11OsPrawnaSpCywilnaWspolnicy] TABLE ( 
 	[wspolsc_regonWspolnikSpolki] [char](9) NULL,
 	[wspolsc_imiePierwsze] [varchar](30) NULL,
 	[wspolsc_imieDrugie] [varchar](30) NULL,
 	[wspolsc_nazwisko] [varchar](40) NULL,
-	[wspolsc_firmaNazwa] [varchar](2000) NULL) 
-	
-	/* [BIR11JednLokalnaOsFizycznej] */
-	
+	[wspolsc_firmaNazwa] [varchar](2000) NULL
+	); 
 	DECLARE [BIR11JednLokalnaOsFizycznej] TABLE ( 
 	[lokfiz_regon14] [char](14) NULL,
 	[lokfiz_nazwa] [varchar](2000) NULL,
@@ -413,20 +383,14 @@
 	[lokfiz_RodzajRejestru_Symbol] [varchar](3) NULL,
 	[lokfiz_OrganRejestrowy_Nazwa] [varchar](240) NULL,
 	[lokfiz_RodzajRejestru_Nazwa] [varchar](240) NULL,
-	[lokfizC_NiePodjetoDzialalnosci] [bit] NULL)
-		
-	
-	/* [BIR11JednLokalnaOsFizycznejPkd] */	
-	
+	[lokfizC_NiePodjetoDzialalnosci] [bit] NULL
+	);
   DECLARE [BIR11JednLokalnaOsFizycznejPkd] TABLE ( 
 	[lokfiz_pkd_Kod] [varchar](5) NULL,
 	[lokfiz_pkd_Nazwa] [varchar](200) NULL,
 	[lokfiz_pkd_Przewazajace] [varchar](1) NULL,
-	[lokfiz_Silos_Symbol] [varchar](10) NULL)
-
-	
-	/* [BIR11JednLokalnaOsPrawnej] */
-	
+	[lokfiz_Silos_Symbol] [varchar](10) NULL
+	);
 	DECLARE [BIR11JednLokalnaOsPrawnej] TABLE ( 
 	[lokpraw_regon14] [char](14) NULL,
 	[lokpraw_nazwa] [varchar](254) NULL,
@@ -463,20 +427,16 @@
 	[lokpraw_rodzajRejestruEwidencji_Symbol] [varchar](3) NULL,
 	[lokpraw_formaFinansowania_Nazwa] [varchar](240) NULL,
 	[lokpraw_organRejestrowy_Nazwa] [varchar](240) NULL,
-	[lokpraw_rodzajRejestruEwidencji_Nazwa] [varchar](240) NULL)
-	
-	
-	/* [BIR11JednLokalnaOsPrawnejPkd] */
-	
+	[lokpraw_rodzajRejestruEwidencji_Nazwa] [varchar](240) NULL
+	);
 	DECLARE [BIR11JednLokalnaOsPrawnejPkd] TABLE ( 
 	[lokpraw_pkdKod] [varchar](5) NULL,
 	[lokpraw_pkdNazwa] [varchar](200) NULL,
-	[lokpraw_pkdPrzewazajace] [varchar](1) NULL)
-	
-	/*	BIR11TypPodmiotu */
-	
+	[lokpraw_pkdPrzewazajace] [varchar](1) NULL
+	);
 	DECLARE [BIR11TypPodmiotu] TABLE ( 
-	[Typ] [varchar](2) NULL )
+	[Typ] [varchar](2) NULL 
+	);
 	
 	
 	

@@ -1,12 +1,17 @@
 import logging
 import re
+import pickle
+from pathlib import Path
 from typing import Any, Optional, Callable
 
 from lxml import objectify
 from lxml.objectify import ObjectifiedElement
 
 from .client import Client
-from .models import Report
+from .models import Company, CompanyId, Pkd
+
+with open('./gus/gus_api/regon/doc/tags.pkl','rb') as f:
+    tags = pickle.load(f)
 
 class RegonAPI:
 
@@ -43,9 +48,9 @@ class RegonAPI:
         )-> list[dict[str,Any]]:
         result = self._client.search(nip=nip, regon=regon, krs=krs)
         result = [self._format(r) for r in objectify.fromstring(result).dane]
-        return Report.field_map(result[0])
+        return Company.field_map(result[0])
     
-    def get_full_report(self, company_data:Report)->list[dict[str,Any]]:
+    def get_full_report(self, company_data:CompanyId)->list[dict[str,Any]]:
         try:
             result = self._client.get_full_report(
                 regon=company_data.regon,
@@ -58,24 +63,30 @@ class RegonAPI:
             )
         return self._format(objectify.fromstring(result).dane, remove_prefix=False)
     
-    def get_pkd(self, company_data:dict[str,Any])->list[dict[str,Any]]:
-        field_map = [
-            ("pkd_kod", "kod", str),
-            ("pkd_nazwa", "nazwa", str),
-            ("pkd_przewazajace", "przewazajace", lambda v: bool(int(v))),
-        ]
+    def get_pkd(self, company:CompanyId)->list[dict[str,Any]]:
+        match company.typ:
+            case "F":
+                schema= "BIR11OsFizycznaPkd"
+            case "P":
+                schema= "BIR11OsPrawnaPkd"
+            case _:
+                raise ValueError(f'Company typ must be P or F')
+
+        tag_mapper = tags.get(schema)
+ 
         try:
             result = self._client.get_pkd_report(
-                regon=company_data["regon"], company_type=company_data["typ"]
+                regon=company.regon, company_type=company.typ
             )
         except KeyError:
             raise ValueError(
                 "The company_data parameter should be single item of result of method 'find_by'"
             )
-        return [
-            self._normalize(self._format(item, remove_prefix=True), field_map=field_map)
-            for item in objectify.fromstring(result).done
-        ] 
+        response =  [
+            {tag_mapper.get(k):v for k,v in self._format(item).items()}
+            for item in objectify.fromstring(result).dane
+            ]
+        return [Pkd(**r) for r in response]
     
     def get_address(self, company_data:dict[str,Any])->dict[str,Any]:
         try:

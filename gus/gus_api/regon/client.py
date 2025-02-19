@@ -74,9 +74,9 @@ class Client:
         
     def get_pkd_report(self, regon:str, company_type:str)->str:
         report_type = (
-            PKD_REPORT_TYPE(company_type)
+            PKD_REPORT_TYPE[company_type]
             if company_type in PKD_REPORT_TYPE
-            else PKD_REPORT_TYPE("F")
+            else PKD_REPORT_TYPE["F"]
         )
         return self.validate_result(self._call("DanePobierzPelnyRaport", regon, report_type))
 
