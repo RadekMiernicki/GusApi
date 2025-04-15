@@ -10,7 +10,7 @@ from lxml.objectify import ObjectifiedElement
 from .client import Client
 from .models import Company, CompanyId, Pkd
 
-with open('./gus/gus_api/regon/doc/tags.pkl','rb') as f:
+with open('./gus_api/regon/doc/tags.pkl','rb') as f:
     tags = pickle.load(f)
 
 class RegonAPI:

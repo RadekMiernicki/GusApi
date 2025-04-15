@@ -8,12 +8,14 @@ gus_api/regon/api.py
 gus_api/regon/client.py
 gus_api/regon/const.py
 gus_api/regon/exceptions.py
+gus_api/regon/ids.py
 gus_api/regon/models.py
+gus_api/regon/tag_creator.py
 gus_api/regon/version.py
 gus_api/sdp/__init__.py
 gus_api/teryt/__init__.py
 gus_api/tests/__init__.py
-gus_api/tests/test_regon_api.py
+gus_api/tests/test_guide.py
 gus_api/tests/utils.py
 gus_api_client.egg-info/PKG-INFO
 gus_api_client.egg-info/SOURCES.txt
