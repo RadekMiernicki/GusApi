@@ -11,7 +11,7 @@ from os import getcwd
 
 print(f'gusapi cwd: {getcwd()}')
 
-with open ('./gus_ap_oldi/args.yml', 'r') as f:
+with open ('./args.yml', 'r') as f:
     r = f.read()
     const = yaml.load(r,yaml.SafeLoader)
     __version__  = const['version']
@@ -59,6 +59,7 @@ class GUS:
         transport = Transport(session=Session())
         transport.session.headers = self.headers
         self.client = Client(self.wdsl, transport=transport)
+        self.binding_name = self.client.wsdl.bindings.keys()
         self.service = self.client.create_service('{http://tempuri.org/}e3', self.endpoint)
         self.headers.update({'sid':self._service(self.login, self.api_key)})
 
@@ -120,3 +121,11 @@ class GUS:
 if __name__ == '__main__':
 
     print(__name__,':', __version__)
+
+    api_atr = ApiAtr()
+    gus = GUS(api_atr=api_atr)
+
+    print(gus.headers)
+    print(gus.api_key)
+    print(gus.binding_name)
+    # print(gus.client)
